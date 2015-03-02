@@ -7,8 +7,21 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeViewController.h"
+#import "CompanyViewController.h"
+#import "DesignViewController.h"
+#import "LogisticsViewController.h"
+#import "PersonalViewController.h"
 
 @interface AppDelegate ()
+{
+    HomeViewController *homeController;
+    DesignViewController *designController;
+    CompanyViewController *companyController;
+    LogisticsViewController *logisticsController;
+    PersonalViewController *personalController;
+    
+}
 
 @end
 
@@ -17,6 +30,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    //检查网络是否存在 如果不存在 则弹出提示 暂时未做
+    
+    //首页
+    homeController = [[HomeViewController alloc] init];
+    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeController];
+    //设计 设计师和设计图
+    designController = [[DesignViewController alloc] init];
+    UINavigationController *designNav = [[UINavigationController alloc] initWithRootViewController:designController];
+    //公司
+    companyController = [[CompanyViewController alloc] init];
+    UINavigationController *companyNav = [[UINavigationController alloc] initWithRootViewController:companyController];
+    //物流
+    logisticsController = [[LogisticsViewController alloc] init];
+    UINavigationController *logisticsNav = [[UINavigationController alloc] initWithRootViewController:logisticsController];
+    //个人中心
+    personalController = [[PersonalViewController alloc] init];
+    UINavigationController *persoNav = [[UINavigationController alloc] initWithRootViewController:personalController];
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.delegate = self;
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:homeNav, designNav, companyNav, logisticsNav, persoNav,nil];
+    
+    //初始化工作
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = self.tabBarController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
